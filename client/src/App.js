@@ -9,7 +9,8 @@ import {
 import PostsListPage from "./pages/PostsListPage";
 import PostFormPage from "./pages/PostFormPage";
 import ShowPostPage from "./pages/ShowPostPage";
-import AboutUsPage from "./pages/AboutUsPage";
+import Song from "./components/Song";
+// import ShowSongsPage from "./pages/ShowSongsPage"
 import Spotify from "spotify-web-api-js";
 
 import "./App.css";
@@ -44,10 +45,7 @@ class App extends React.Component {
     const params = this.getHashParams();
     this.state = {
       loggedIn: params.access_token ? true : false,
-      nowPlaying: {
-        name: "not checked",
-        image: ""
-      }
+      songs: []
     };
     if (params.access_token) {
       spotifyWebApi.setAccessToken(params.access_token);
@@ -71,34 +69,38 @@ class App extends React.Component {
     return me;
   };
 
-  getNowPlaying = async () => {
-    const response = await spotifyWebApi.getMyCurrentPlaybackState();
-    console.log(response);
-    this.setState({
-      nowPlaying: {
-        name: response.item.name,
-        image: response.item.album.images[0].url
-      }
-    });
-  };
-
   getGenres = async () => {
     const genres = await spotifyWebApi.getAvailableGenreSeeds();
     return genres.genres;
   };
 
-  login = async () => {
-    const auth = await fetch("/api/spotify/login");
-    spotifyWebApi.setAccessToken(auth);
-  }
-
-  getSong = async () => {
-    const song = await fetch("/api/spotify/song");
-    const genres = await song.json();
-    console.log(genres);
-  }
+  getASong = async () => {
+    let tracks;
+    let foundTrack = false;
+    while (!foundTrack) {
+      const genres = await this.getGenres();
+      const randomGenre = genres[Math.floor(Math.random() * genres.length)];
+      console.log(randomGenre);
+      tracks = await spotifyWebApi.searchTracks(`genre:${randomGenre}`, {
+        limit: 1,
+        offset: Math.floor(Math.random() * 10001)
+      });
+      if (tracks.tracks.items[0]) {
+        foundTrack = true;
+      }
+    }
+    console.log(tracks.tracks.items[0]);
+    this.setState(state => {
+      const songs = [...state.songs, tracks.tracks.items[0]];
+      return {
+        songs
+      };
+    });
+    return tracks.tracks.items[0];
+  };
 
   render() {
+    const songItems = this.state.songs.map(song => <Song songItem={song} />);
     return (
       <Router>
         <Navigation />
@@ -113,9 +115,11 @@ class App extends React.Component {
           </div>
         </div> */}
         <a href="http://localhost:8080/login">
-          Log in to spotify
+          <button>Log in to spotify</button>
         </a>
         <button onClick={this.getMe}>Do other stuff</button>
+        <button onClick={this.getASong}>Do other stuff</button>
+        {songItems}
       </Router>
     );
   }

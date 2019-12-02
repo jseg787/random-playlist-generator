@@ -5,11 +5,11 @@ const path = require("path");
 const querystring = require("querystring");
 const db = require("./models");
 const dotenv = require("dotenv");
+const SpotifyNodeApi = require("spotify-web-api-node");
 dotenv.config();
 
 const PORT = process.env.PORT || 8000;
 
-const SpotifyNodeApi = require("spotify-web-api-node");
 const spotifyApi = new SpotifyNodeApi({
   clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
@@ -54,29 +54,29 @@ app.get("/callback", async (req, res) => {
   );
 });
 
-// this lets us parse 'application/json' content in http requests
-app.use(bodyParser.json());
+// // this lets us parse 'application/json' content in http requests
+// app.use(bodyParser.json());
 
-// add http request logging to help us debug and audit app use
-const logFormat = process.env.NODE_ENV === "production" ? "combined" : "dev";
-app.use(morgan(logFormat));
+// // add http request logging to help us debug and audit app use
+// const logFormat = process.env.NODE_ENV === "production" ? "combined" : "dev";
+// app.use(morgan(logFormat));
 
-// this mounts controllers/index.js at the route `/api`
-app.use("/api", require("./controllers"));
+// // this mounts controllers/index.js at the route `/api`
+// app.use("/api", require("./controllers"));
 
-// for production use, we serve the static react build folder
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+// // for production use, we serve the static react build folder
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "../client/build")));
 
-  // all unknown routes should be handed to our react app
-  app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
-  });
-}
+//   // all unknown routes should be handed to our react app
+//   app.get("*", function(req, res) {
+//     res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+//   });
+// }
 
-// update DB tables based on model updates. Does not handle renaming tables/columns
-// NOTE: toggling this to true drops all tables (including data)
-db.sequelize.sync({ force: false });
+// // update DB tables based on model updates. Does not handle renaming tables/columns
+// // NOTE: toggling this to true drops all tables (including data)
+// db.sequelize.sync({ force: false });
 
 // start up the server
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));

@@ -31,5 +31,13 @@
     "ignore": [
       "client/"
     ]
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jseg787/random-playlist-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jseg787/random-playlist-generator/issues"
+  },
+  "homepage": "https://github.com/jseg787/random-playlist-generator#readme"
 }

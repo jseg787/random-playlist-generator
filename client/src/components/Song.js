@@ -5,7 +5,9 @@ function Song(props) {
   const { album, artists, name } = songItem;
   return (
     <div className="song">
-      <div className="artwork"><img src={album.images[2].url} /></div>
+      <div className="artwork">
+        <img src={album.images[2].url} />
+      </div>
       <div className="info">
         <div className="title">{name}</div>
         <div className="artist">{artists[0].name}</div>

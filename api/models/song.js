@@ -1,33 +1,26 @@
-'use strict';
-const { Model } = require('sequelize');
-
+"use strict";
+const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class Song extends Model {}
 
-  Song.init({
-    name: {
-      type: DataTypes.STRING
+  Song.init(
+    {
+      name: { type: DataTypes.STRING },
+      artist: { type: DataTypes.STRING },
+      album: { type: DataTypes.STRING },
+      artwork: { type: DataTypes.STRING },
+      songID: { type: DataTypes.STRING }
     },
-    artist: {
-      type: DataTypes.STRING
-    },
-    album: {
-      type: DataTypes.STRING
-    },
-    artwork: {
-      type: DataTypes.STRING
-    },
-    songID: {
-      type: DataTypes.STRING
-    },
-  }, {
-    sequelize,
-    modelName: 'song'
-  });
+    {
+      sequelize,
+      modelName: "song"
+    }
+  );
 
-  Song.associate = (models) => {
+  Song.associate = models => {
     // associations can be defined here
+    models.Song.belongsToMany(models.Playlist, { through: "MovieActor" });
   };
 
   return Song;

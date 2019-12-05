@@ -6,9 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Playlist.init(
     {
-      name: {
-        type: DataTypes.STRING
-      }
+      name: { type: DataTypes.STRING }
     },
     {
       sequelize,
@@ -18,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Playlist.associate = models => {
     // associations can be defined here
+    models.Playlist.belongsToMany(models.Song, { through: "SongPlaylist" });
   };
 
   return Playlist;

@@ -8,7 +8,7 @@ const spotifyWebApi = new Spotify();
 
 class GetPlaylist extends React.Component {
   state = {
-    playlistName: "something",
+    playlistName: "Default Name",
     numberOfSongs: 10,
     loading: false,
     songs: []
@@ -71,6 +71,12 @@ class GetPlaylist extends React.Component {
     this.setState({ songs: [] });
   };
 
+  updateNumber = e => {
+    this.setState({
+      numberOfSongs: e.target.value
+    });
+  };
+
   render() {
     const songItems = this.state.songs.map(song => <Song songItem={song} />);
     return (
@@ -80,10 +86,17 @@ class GetPlaylist extends React.Component {
         ) : (
           <div>
             {/* <button onClick={this.getMe}>Do other stuff</button> */}
-            <button onClick={this.getASong}>Get a song</button>
-            <button onClick={this.resetSongs}>Reset songs</button>
+            {/* <button onClick={this.getASong}>Get a song</button> */}
+            {/* <button onClick={this.resetSongs}>Reset songs</button> */}
             <button onClick={this.getAPlaylist}>Get a playlist</button>
-            <input type="number" />
+            <input
+              type="number"
+              min="1"
+              max="20"
+              step="1"
+              onChange={this.updateNumber}
+              value={this.state.numberOfSongs}
+            />
             {songItems}
           </div>
         )}

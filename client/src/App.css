@@ -1,3 +1,19 @@
+:root, body, * {
+  /* CSS variable */
+  --bg-one: #FFF;
+  --bg-two: #DDD;
+  --bg-three: #333;
+  --txt-one: #333;
+  --txt-two: #003552;
+  --acc-one: #333;
+  --acc-two: #FFF;
+  --acc-three: #C00;
+  /*--acc-four: ;
+  --acc-five: ;
+  --acc-six: ;*/
+  --fffa: rgba(255, 255, 255, 0.1);
+}
+
 /*.App {
   text-align: center;
 }
@@ -24,10 +40,11 @@
 
 .song {
   position: relative;
+  width: 414px;
   padding: 0.675rem 0;
-  background-color: #DDD;
-  border-top: 1px solid #FFF;
-  border-bottom: 1px solid #333;
+  background-color: var(--bg-two);
+  border-top: 1px solid var(--acc-two);
+  border-bottom: 1px solid var(--acc-one);
 }
 
 .artwork img {
@@ -39,15 +56,15 @@
 .info {
   padding: auto 0;
   text-align: left;
-  color: #333;
+  color: var(--txt-one);
 }
 
-.info:first-child {
+.info div {
   display: block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 90px;
+  max-width: 90%;
 }
 
 .title {
@@ -64,6 +81,13 @@
   font-size: 1.5rem;
 }
 
-.add-to-likes #liked {
-  color: #C00;
+.add-to-likes:hover {
+  color: var(--acc-three);
 }
+
+.add-to-likes #liked {
+  color: var(--acc-three);
+}
+
+/* Input type = number */
+

@@ -16,7 +16,7 @@ function Song(props) {
       <div className="buttons">
         <button className="add-to-likes">
           {/* add the functionality for adding a song to spotify likes */}
-          Add to likes
+          &#x2665;
         </button>
       </div>
     </div>

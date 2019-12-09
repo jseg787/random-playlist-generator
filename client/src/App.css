@@ -1,46 +1,24 @@
-:root, body, * {
+:root,
+body,
+* {
   /* CSS variable */
-  --bg-one: #FFF;
-  --bg-two: #DDD;
+  --bg-one: #fff;
+  --bg-two: #ddd;
   --bg-three: #333;
   --txt-one: #333;
   --txt-two: #003552;
   --acc-one: #333;
-  --acc-two: #FFF;
-  --acc-three: #C00;
+  --acc-two: #fff;
+  --acc-three: #c00;
   /*--acc-four: ;
   --acc-five: ;
   --acc-six: ;*/
   --fffa: rgba(255, 255, 255, 0.1);
 }
 
-/*.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #09d3ac;
-}
-*/
-
 .song {
   position: relative;
-  width: 414px;
+  /* width: 414px; */
   padding: 0.675rem 0;
   background-color: var(--bg-two);
   border-top: 1px solid var(--acc-two);
@@ -91,3 +69,25 @@
 
 /* Input type = number */
 
+.player {
+  position: relative;
+  padding-bottom: 300px;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  height: auto;
+}
+
+.player iframe {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 75%;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.playlist {
+  width: 70%;
+  max-width: 420px;
+}

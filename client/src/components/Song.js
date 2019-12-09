@@ -1,8 +1,8 @@
 import React from "react";
 
-function Song(props) {
-  const { songItem } = props;
-  const { album, artists, name } = songItem;
+function Song({ songItem, playingSong, setPlayingSong }) {
+  const { album, artists, name, id } = songItem;
+  const src = `https://open.spotify.com/embed/track/${id}`;
   return (
     <div className="song">
       <div className="artwork">
@@ -18,7 +18,21 @@ function Song(props) {
           {/* add the functionality for adding a song to spotify likes */}
           &#x2665;
         </button>
+        <button onClick={() => setPlayingSong(id)}>Show player</button>
       </div>
+      {playingSong === id && (
+        <div className="player">
+          <iframe
+            src={src}
+            width="250"
+            height="80"
+            frameborder="0"
+            allowtransparency="true"
+            allow="encrypted-media"
+            title={name}
+          ></iframe>
+        </div>
+      )}
     </div>
   );
 }

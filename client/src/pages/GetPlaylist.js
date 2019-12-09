@@ -12,7 +12,8 @@ class GetPlaylist extends React.Component {
     numberOfSongs: 10,
     loading: false,
     genres: [],
-    songs: []
+    songs: [],
+    playingSong: ""
   };
 
   componentDidMount = async () => {
@@ -49,6 +50,7 @@ class GetPlaylist extends React.Component {
         foundTrack = true;
       }
     }
+    console.log(newSongData.tracks.items[0]);
     this.setState(state => {
       const songs = [...state.songs, newSongData.tracks.items[0]];
       return {
@@ -84,10 +86,22 @@ class GetPlaylist extends React.Component {
     });
   };
 
+  setPlayingSong = id => {
+    this.setState({
+      playingSong: id
+    });
+  };
+
   render() {
-    const songItems = this.state.songs.map(song => <Song songItem={song} />);
+    const songItems = this.state.songs.map(song => (
+      <Song
+        songItem={song}
+        playingSong={this.state.playingSong}
+        setPlayingSong={this.setPlayingSong}
+      />
+    ));
     return (
-      <div>
+      <div className="playlist">
         {this.state.loading ? (
           <Loading />
         ) : (

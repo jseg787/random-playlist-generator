@@ -83,6 +83,7 @@ class App extends React.Component {
                 <Route path="/posts/:id" component={ShowPostPage} />
                 <Route path="/about-us" component={AboutUsPage} />
                 <Route path="/" component={PostsListPage} /> */}
+                {/* <Route path="/playlists/:id" component={ShowPlaylists} /> */}
                 <Route path="/playlists" component={ShowPlaylists} />
                 <Route path="/" component={GetPlaylist} />
               </Switch>

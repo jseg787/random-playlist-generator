@@ -1,17 +1,4 @@
 :root, body, * {
-  /* CSS variable */
-  --bg-one: #E7FFFF;
-  --bg-two: #C2C2C2;
-  --bg-three: #333;
-  --txt-one: #333;
-  --txt-two: #003552;
-  /*--acc-one: ;
-  --acc-two: ;
-  --acc-three: ;
-  --acc-four: ;
-  --acc-five: ;
-  --acc-six: ;*/
-  --fffa: rgba(255, 255, 255, 0.1);
   /* Element reset */
   margin: 0;
   padding: 0;

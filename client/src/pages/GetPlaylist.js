@@ -1,7 +1,7 @@
 import React from "react";
 import Song from "../components/Song";
 import Loading from "../components/Loading";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Spotify from "spotify-web-api-js";
 
 const spotifyWebApi = new Spotify();
@@ -11,43 +11,50 @@ class GetPlaylist extends React.Component {
     playlistName: "Default Name",
     numberOfSongs: 10,
     loading: false,
+    genres: [],
     songs: []
   };
 
+  componentDidMount = async () => {
+    this.setState({ loading: true });
+    const genres = await this.getGenres();
+    this.setState({
+      genres: genres,
+      loading: false
+    });
+  };
+
   getGenres = async () => {
-    const genres = await spotifyWebApi.getAvailableGenreSeeds();
-    return genres.genres;
+    const genreData = await spotifyWebApi.getAvailableGenreSeeds();
+    return genreData.genres;
   };
 
   getMe = async () => {
     const me = await spotifyWebApi.getMe();
-    console.log(me);
     return me;
   };
 
   getASong = async () => {
-    let tracks;
+    let newSongData;
     let foundTrack = false;
     while (!foundTrack) {
-      const genres = await this.getGenres();
-      const randomGenre = genres[Math.floor(Math.random() * genres.length)];
-      console.log(randomGenre);
-      tracks = await spotifyWebApi.searchTracks(`genre:${randomGenre}`, {
+      const randomGenre = this.state.genres[
+        Math.floor(Math.random() * this.state.genres.length)
+      ];
+      newSongData = await spotifyWebApi.searchTracks(`genre:${randomGenre}`, {
         limit: 1,
         offset: Math.floor(Math.random() * 10001)
       });
-      if (tracks.tracks.items[0]) {
+      if (newSongData.tracks.items[0]) {
         foundTrack = true;
       }
     }
-    console.log(tracks.tracks.items[0]);
     this.setState(state => {
-      const songs = [...state.songs, tracks.tracks.items[0]];
+      const songs = [...state.songs, newSongData.tracks.items[0]];
       return {
         songs
       };
     });
-    return tracks.tracks.items[0];
   };
 
   getAPlaylist = async () => {
@@ -63,7 +70,7 @@ class GetPlaylist extends React.Component {
       loading: false
     });
     // const playlist = await spotifyWebApi.createPlaylist(me.id, {
-    //   name: "Look ma I made a playlist"
+    //   name: this.state.playlistName
     // });
   };
 
@@ -85,9 +92,6 @@ class GetPlaylist extends React.Component {
           <Loading />
         ) : (
           <div>
-            {/* <button onClick={this.getMe}>Do other stuff</button> */}
-            {/* <button onClick={this.getASong}>Get a song</button> */}
-            {/* <button onClick={this.resetSongs}>Reset songs</button> */}
             <button onClick={this.getAPlaylist}>Get a playlist</button>
             <input
               type="number"

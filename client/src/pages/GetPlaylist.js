@@ -11,6 +11,8 @@ class GetPlaylist extends React.Component {
     playlistName: "Default Name",
     numberOfSongs: 10,
     loading: false,
+    saving: false,
+    saved: false,
     genres: [],
     songs: [],
     playingSong: ""
@@ -60,9 +62,9 @@ class GetPlaylist extends React.Component {
   };
 
   getAPlaylist = async () => {
-    // const me = await this.getMe();
     this.setState({
-      loading: true
+      loading: true,
+      saved: false
     });
     this.resetSongs();
     for (let i = 0; i < this.state.numberOfSongs; i++) {
@@ -71,9 +73,6 @@ class GetPlaylist extends React.Component {
     this.setState({
       loading: false
     });
-    // const playlist = await spotifyWebApi.createPlaylist(me.id, {
-    //   name: this.state.playlistName
-    // });
   };
 
   resetSongs = () => {
@@ -84,6 +83,27 @@ class GetPlaylist extends React.Component {
     this.setState({
       numberOfSongs: e.target.value
     });
+  };
+
+  updateTitleField = e => {
+    this.setState({
+      playlistName: e.target.value
+    });
+  };
+
+  savePlaylist = async () => {
+    this.setState({ saving: true });
+    const me = await this.getMe();
+    const playlistSongs = this.state.songs.map(song => song.uri);
+    const playlist = await spotifyWebApi.createPlaylist(me.id, {
+      name: this.state.playlistName
+    });
+    await spotifyWebApi.addTracksToPlaylist(playlist.id, playlistSongs);
+    this.setState({
+      saving: false,
+      saved: true
+    });
+    setTimeout(() => this.setState({ saved: false }), 3000);
   };
 
   setPlayingSong = id => {
@@ -98,6 +118,7 @@ class GetPlaylist extends React.Component {
         songItem={song}
         playingSong={this.state.playingSong}
         setPlayingSong={this.setPlayingSong}
+        key={song.name}
       />
     ));
     return (
@@ -115,6 +136,18 @@ class GetPlaylist extends React.Component {
               onChange={this.updateNumber}
               value={this.state.numberOfSongs}
             />
+            {songItems[0] && (
+              <div>
+                <button onClick={this.savePlaylist}>Save Playlist</button>
+                {this.state.saving && <Loading />}
+                {this.state.saved && <p className="text-success">Saved</p>}
+                <input
+                  type="text"
+                  placeholder="Name the playlist"
+                  onChange={this.updateTitleField}
+                />
+              </div>
+            )}
             {songItems}
           </div>
         )}

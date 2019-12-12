@@ -6,7 +6,7 @@ function Song({ songItem, playingSong, setPlayingSong }) {
   return (
     <div className="song">
       <div className="artwork">
-        <img src={album.images[2].url} />
+        <img src={album.images[2].url} alt={name} />
       </div>
       <div className="info">
         <div className="title">{name}</div>

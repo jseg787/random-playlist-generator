@@ -3,9 +3,9 @@ body,
 * {
   /* CSS variable */
   --bg-one: #fff;
-  --bg-two: #ddd;
+  --bg-two: #282828;
   --bg-three: #333;
-  --txt-one: #333;
+  --txt-one: #fff;
   --txt-two: #003552;
   --acc-one: #333;
   --acc-two: #fff;
@@ -16,55 +16,58 @@ body,
   --fffa: rgba(255, 255, 255, 0.1);
 }
 
+body {
+  background-color: #333;
+}
+
 .song {
-  position: relative;
+  /* position: relative; */
   /* width: 414px; */
   padding: 0.675rem 0;
   background-color: var(--bg-two);
-  border-top: 1px solid var(--acc-two);
+  /* border-top: 1px solid var(--acc-two); */
   border-bottom: 1px solid var(--acc-one);
 }
 
-.artwork img {
+/* .artwork img {
   margin: 0 0.675rem;
   border-radius: 0.25rem;
   float: left;
-}
+} */
 
 .info {
-  padding: auto 0;
+  /* padding: auto 0; */
   text-align: left;
   color: var(--txt-one);
 }
 
 .info div {
-  display: block;
+  /* display: block; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 90%;
+  /* max-width: 100%; */
 }
 
 .title {
   font-weight: 800;
 }
 
-.add-to-likes {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  padding: 0.675rem;
-  border: none;
-  background: none;
+.buttons button {
   font-size: 1.5rem;
+  padding: 0;
+}
+
+.add-to-likes {
+  color: var(--acc-three);
 }
 
 .add-to-likes:hover {
   color: var(--acc-three);
 }
 
-.add-to-likes #liked {
-  color: var(--acc-three);
+.add-to-likes:active {
+  color: var(--acc-three) !important; 
 }
 
 /* Input type = number */
@@ -76,6 +79,7 @@ body,
   overflow: hidden;
   max-width: 100%;
   height: auto;
+  margin-top: .5rem;
 }
 
 .player iframe {
@@ -90,4 +94,29 @@ body,
 .playlist {
   width: 70%;
   max-width: 420px;
+}
+
+.number {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  color: #fff !important;
+  font-size: 2rem;
+  text-align: right;
+  width: 3.5rem;
+  margin: 0 .2rem;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.number-buttons {
+  width: 30px;
+}
+
+.change-number {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  font-weight: bolder;
+  color: #fff;
 }

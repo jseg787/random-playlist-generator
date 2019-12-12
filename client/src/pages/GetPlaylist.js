@@ -80,9 +80,33 @@ class GetPlaylist extends React.Component {
   };
 
   updateNumber = e => {
-    this.setState({
-      numberOfSongs: e.target.value
-    });
+    this.setState({ numberOfSongs: e.target.value }, this.validateNumber);
+  };
+
+  incrementNumber = () => {
+    this.setState(
+      { numberOfSongs: this.state.numberOfSongs + 1 },
+      this.validateNumber
+    );
+  };
+
+  decrementNumber = () => {
+    this.setState(
+      { numberOfSongs: this.state.numberOfSongs - 1 },
+      this.validateNumber
+    );
+  };
+
+  validateNumber = () => {
+    if (this.state.numberOfSongs < 1) {
+      this.setState({
+        numberOfSongs: 1
+      });
+    } else if (this.state.numberOfSongs > 20) {
+      this.setState({
+        numberOfSongs: 20
+      });
+    }
   };
 
   updateTitleField = e => {
@@ -127,25 +151,44 @@ class GetPlaylist extends React.Component {
           <Loading />
         ) : (
           <div>
-            <button onClick={this.getAPlaylist}>Get a playlist</button>
-            <input
-              type="number"
-              min="1"
-              max="20"
-              step="1"
-              onChange={this.updateNumber}
-              value={this.state.numberOfSongs}
-            />
+            <div className="d-flex form-inline">
+              <button className="btn btn-primary" onClick={this.getAPlaylist}>
+                Get a playlist
+              </button>
+              <input
+                className="number"
+                type="number"
+                min="1"
+                max="20"
+                step="1"
+                onChange={this.updateNumber}
+                value={this.state.numberOfSongs}
+              />
+              <div className="number-buttons d-flex flex-column">
+                <button
+                  className="change-number"
+                  onClick={this.incrementNumber}
+                >
+                  +
+                </button>
+                <button
+                  className="change-number"
+                  onClick={this.decrementNumber}
+                >
+                  -
+                </button>
+              </div>
+            </div>
             {songItems[0] && (
               <div>
                 <button onClick={this.savePlaylist}>Save Playlist</button>
                 {this.state.saving && <Loading />}
-                {this.state.saved && <p className="text-success">Saved</p>}
                 <input
                   type="text"
                   placeholder="Name the playlist"
                   onChange={this.updateTitleField}
                 />
+                {this.state.saved && <p className="text-success">Saved</p>}
               </div>
             )}
             {songItems}

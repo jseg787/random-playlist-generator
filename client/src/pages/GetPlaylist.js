@@ -1,7 +1,8 @@
 import React from "react";
-import { Redirect } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 import Song from "../components/Song";
 import Loading from "../components/Loading";
+import Search from "../components/Search";
 import Spotify from "spotify-web-api-js";
 
 const spotifyWebApi = new Spotify();
@@ -178,37 +179,13 @@ class GetPlaylist extends React.Component {
             <Loading />
           ) : (
             <div>
-              <div className="d-flex justify-content-center mb-3">
-                <input
-                  className="number"
-                  type="number"
-                  min="1"
-                  max="20"
-                  step="1"
-                  onChange={this.updateNumber}
-                  value={this.state.numberOfSongs}
-                />
-                <div className="number-buttons d-flex flex-column">
-                  <button
-                    className="change-number"
-                    onClick={this.incrementNumber}
-                  >
-                    +
-                  </button>
-                  <button
-                    className="change-number"
-                    onClick={this.decrementNumber}
-                  >
-                    -
-                  </button>
-                </div>
-                <p className="text-light mr-3" style={{ fontSize: "1.5rem" }}>
-                  songs
-                </p>
-                <button className="btn btn-primary" onClick={this.getAPlaylist}>
-                  Get a playlist
-                </button>
-              </div>
+              <Search
+                numberOfSongs={this.state.numberOfSongs}
+                updateNumber={this.updateNumber}
+                incrementNumber={this.incrementNumber}
+                decrementNumber={this.decrementNumber}
+                getAPlaylist={this.getAPlaylist}
+              />
               {songItems[0] && (
                 <div className="d-flex justify-content-center my-3">
                   <input

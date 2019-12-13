@@ -20,7 +20,8 @@ const scopes = [
   "user-read-email",
   "user-read-private",
   "playlist-modify-public",
-  "playlist-modify-private"
+  "playlist-modify-private",
+  "user-library-modify"
 ];
 
 function generateRandomString(length) {

@@ -24,9 +24,9 @@ function Navigation(props) {
       </Link>
       <ul className="navbar-nav mr-auto">
         <li className="nav-item">
-          <NavLink className="nav-link" exact to="/playlists">
+          {/* <NavLink className="nav-link" exact to="/playlists">
             Other Page
-          </NavLink>
+          </NavLink> */}
         </li>
       </ul>
     </nav>

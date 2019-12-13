@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Song.associate = models => {
     // associations can be defined here
-    models.Song.belongsToMany(models.Playlist, { through: "MovieActor" });
+    models.Song.belongsToMany(models.Playlist, { through: "SongPlaylist" });
   };
 
   return Song;

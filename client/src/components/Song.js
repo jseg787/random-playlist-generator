@@ -1,6 +1,6 @@
 import React from "react";
 
-function Song({ songItem, playingSong, setPlayingSong }) {
+function Song({ songItem, playingSong, setPlayingSong, saveSong }) {
   const { album, artists, name, id } = songItem;
   const src = `https://open.spotify.com/embed/track/${id}`;
   return (
@@ -20,7 +20,7 @@ function Song({ songItem, playingSong, setPlayingSong }) {
             <div className="album">{album.name}</div>
           </div>
           <div className="buttons col-3 d-flex flex-column">
-            <button className="btn btn-light add-to-likes d-block">
+            <button className="btn btn-light add-to-likes d-block" onClick={() => saveSong(id)}>
               {/* add the functionality for adding a song to spotify likes */}
               &#x2665;
             </button>
@@ -34,7 +34,7 @@ function Song({ songItem, playingSong, setPlayingSong }) {
             src={src}
             width="250"
             height="80"
-            frameborder="0"
+            frameBorder="0"
             allowtransparency="true"
             allow="encrypted-media"
             title={name}

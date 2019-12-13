@@ -120,3 +120,13 @@ input[type=number]::-webkit-inner-spin-button {
   font-weight: bolder;
   color: #fff;
 }
+
+.playlist-title {
+  background-color: rgba(0, 0, 0, 0);
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 1px solid #999;
+  text-align: center;
+  color: white;
+}

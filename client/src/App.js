@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 import ShowPlaylists from "./pages/ShowPlaylists";
 import GetPlaylist from "./pages/GetPlaylist";
+import LoginToSpotify from "./pages/LoginToSpotify"
+import logo from "./logo.png";
 import Spotify from "spotify-web-api-js";
 
 import "./App.css";
@@ -18,19 +20,9 @@ function Navigation(props) {
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark shadow mb-3">
       <Link className="navbar-brand" to="/">
-        Random Playlist Generator
+        <img src={logo} style={{width: "1.8rem"}}/>
       </Link>
       <ul className="navbar-nav mr-auto">
-        {/* <li className="nav-item">
-          <NavLink className="nav-link" exact to="/posts/new">
-            Create a Micro Post
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" exact to="/about-us">
-            About Us
-          </NavLink>
-        </li> */}
         <li className="nav-item">
           <NavLink className="nav-link" exact to="/playlists">
             Other Page
@@ -72,32 +64,29 @@ class App extends React.Component {
   };
 
   render() {
-    if (this.state.loggedIn) {
+    // if (this.state.loggedIn) {
       return (
         <Router>
           <Navigation />
           <div className="container-fluid text-center">
             <div className="row justify-content-center">
               <Switch>
-                {/* <Route path="/posts/new" component={PostFormPage} />
-                <Route path="/posts/:id" component={ShowPostPage} />
-                <Route path="/about-us" component={AboutUsPage} />
-                <Route path="/" component={PostsListPage} /> */}
                 {/* <Route path="/playlists/:id" component={ShowPlaylists} /> */}
+                <Route path="/login" component={LoginToSpotify} />
                 <Route path="/playlists" component={ShowPlaylists} />
-                <Route path="/" component={GetPlaylist} />
+                <Route path="/" /* component={GetPlaylist} */  render={(props) => <GetPlaylist loggedIn={this.state.loggedIn} /* {...props} */ /> } />
               </Switch>
             </div>
           </div>
         </Router>
       );
-    } else {
-      return (
-        <a href="http://localhost:8080/login">
-          <button>Log in to spotify</button>
-        </a>
-      );
-    }
+    // } else {
+    //   return (
+    //     <a href="http://localhost:8080/login">
+    //       <button>Log in to spotify</button>
+    //     </a>
+    //   );
+    // }
   }
 }
 

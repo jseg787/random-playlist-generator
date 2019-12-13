@@ -1,15 +1,15 @@
 import React from "react";
+import { Redirect } from 'react-router-dom';
 import Song from "../components/Song";
 import Loading from "../components/Loading";
-// import { Link } from "react-router-dom";
 import Spotify from "spotify-web-api-js";
 
 const spotifyWebApi = new Spotify();
 
 class GetPlaylist extends React.Component {
   state = {
-    playlistName: "Default Name",
-    numberOfSongs: 10,
+    playlistName: "",
+    numberOfSongs: 5,
     loading: false,
     saving: false,
     saved: false,
@@ -21,6 +21,7 @@ class GetPlaylist extends React.Component {
   componentDidMount = async () => {
     this.setState({ loading: true });
     const genres = await this.getGenres();
+    this.setDefaultTitle();
     this.setState({
       genres: genres,
       loading: false
@@ -67,6 +68,7 @@ class GetPlaylist extends React.Component {
       saved: false
     });
     this.resetSongs();
+    this.setDefaultTitle();
     for (let i = 0; i < this.state.numberOfSongs; i++) {
       await this.getASong();
     }
@@ -109,10 +111,28 @@ class GetPlaylist extends React.Component {
     }
   };
 
+  setDefaultTitle = () => {
+    const date = new Date();
+    const day = date.getDay().toString();
+    const month = date.getMonth().toString();
+    const year = date.getFullYear().toString();
+    const hour = date.getHours().toString();
+    const minutes = date.getMinutes().toString();
+    const title = `${year}-${month}-${day} ${hour}:${minutes}`;
+    this.setState({ playlistName: title });
+  };
+
   updateTitleField = e => {
-    this.setState({
-      playlistName: e.target.value
-    });
+    this.setState(
+      {
+        playlistName: e.target.value
+      },
+      () => {
+        if (this.state.playlistName === "") {
+          this.setDefaultTitle();
+        }
+      }
+    );
   };
 
   savePlaylist = async () => {
@@ -130,6 +150,10 @@ class GetPlaylist extends React.Component {
     setTimeout(() => this.setState({ saved: false }), 3000);
   };
 
+  saveSong = async id => {
+    await spotifyWebApi.addToMySavedTracks([id]);
+  };
+
   setPlayingSong = id => {
     this.setState({
       playingSong: id
@@ -142,60 +166,73 @@ class GetPlaylist extends React.Component {
         songItem={song}
         playingSong={this.state.playingSong}
         setPlayingSong={this.setPlayingSong}
+        saveSong={this.saveSong}
         key={song.name}
       />
     ));
-    return (
-      <div className="playlist">
-        {this.state.loading ? (
-          <Loading />
-        ) : (
-          <div>
-            <div className="d-flex form-inline">
-              <button className="btn btn-primary" onClick={this.getAPlaylist}>
-                Get a playlist
-              </button>
-              <input
-                className="number"
-                type="number"
-                min="1"
-                max="20"
-                step="1"
-                onChange={this.updateNumber}
-                value={this.state.numberOfSongs}
-              />
-              <div className="number-buttons d-flex flex-column">
-                <button
-                  className="change-number"
-                  onClick={this.incrementNumber}
-                >
-                  +
-                </button>
-                <button
-                  className="change-number"
-                  onClick={this.decrementNumber}
-                >
-                  -
-                </button>
-              </div>
-            </div>
-            {songItems[0] && (
-              <div>
-                <button onClick={this.savePlaylist}>Save Playlist</button>
-                {this.state.saving && <Loading />}
+    if (!this.props.loggedIn) return <Redirect to="/login" />;
+    else {
+      return (
+        <div className="playlist">
+          {this.state.loading ? (
+            <Loading />
+          ) : (
+            <div>
+              <div className="d-flex justify-content-center mb-3">
                 <input
-                  type="text"
-                  placeholder="Name the playlist"
-                  onChange={this.updateTitleField}
+                  className="number"
+                  type="number"
+                  min="1"
+                  max="20"
+                  step="1"
+                  onChange={this.updateNumber}
+                  value={this.state.numberOfSongs}
                 />
-                {this.state.saved && <p className="text-success">Saved</p>}
+                <div className="number-buttons d-flex flex-column">
+                  <button
+                    className="change-number"
+                    onClick={this.incrementNumber}
+                  >
+                    +
+                  </button>
+                  <button
+                    className="change-number"
+                    onClick={this.decrementNumber}
+                  >
+                    -
+                  </button>
+                </div>
+                <p className="text-light mr-3" style={{ fontSize: "1.5rem" }}>
+                  songs
+                </p>
+                <button className="btn btn-primary" onClick={this.getAPlaylist}>
+                  Get a playlist
+                </button>
               </div>
-            )}
-            {songItems}
-          </div>
-        )}
-      </div>
-    );
+              {songItems[0] && (
+                <div className="d-flex justify-content-center my-3">
+                  <input
+                    className="playlist-title mx-3"
+                    type="text"
+                    placeholder="Name the playlist"
+                    onChange={this.updateTitleField}
+                  />
+                  <button
+                    className="btn btn-success"
+                    onClick={this.savePlaylist}
+                  >
+                    Save Playlist
+                  </button>
+                  {this.state.saving && <Loading />}
+                  {this.state.saved && <p className="text-success">Saved</p>}
+                </div>
+              )}
+              {songItems}
+            </div>
+          )}
+        </div>
+      );
+    }
   }
 }
 

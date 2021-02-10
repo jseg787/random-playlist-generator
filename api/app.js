@@ -1,7 +1,9 @@
 const express = require('express');
 const querystring = require('querystring');
-const dotenv = require('dotenv');
 const SpotifyNodeApi = require('spotify-web-api-node');
+const app = express();
+
+const dotenv = require('dotenv');
 dotenv.config();
 
 const PORT = 8000;
@@ -20,6 +22,9 @@ const scopes = [
 	'user-library-modify'
 ];
 
+// this function comes from the spotify wep api auth example code on github
+// https://github.com/spotify/web-api-auth-examples/blob/master/authorization_code/app.js
+// just to generate a random state
 function generateRandomString(length) {
 	let text = '';
 	const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -30,24 +35,28 @@ function generateRandomString(length) {
 	return text;
 }
 
-const app = express();
-
 app.get('/login', (req, res) => {
 	const state = generateRandomString(16);
 	res.redirect(spotifyApi.createAuthorizeURL(scopes, state));
 });
 
 app.get('/callback', async (req, res) => {
-	const { code, state } = req.query;
+	// console.log(req);
+	const { code } = req.query;
 	const data = await spotifyApi.authorizationCodeGrant(code);
 	const { expires_in, access_token, refresh_token } = data.body;
-	res.redirect(
-		'http://localhost:3000/#' +
-			querystring.stringify({
-				access_token: access_token,
-				refresh_token: refresh_token
-			})
-	);
+	// res.redirect(
+	// 	'http://localhost:3000/#' +
+	// 		querystring.stringify({
+	// 			access_token: access_token,
+	// 			refresh_token: refresh_token
+	// 		})
+	// );
+	spotifyApi.setAccessToken(access_token);
+	const me = await spotifyApi.getMe();
+	res.json(me);
+	// res.send(access_token);
+	// res.send(req);
 });
 
 // start up the server

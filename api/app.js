@@ -41,23 +41,18 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/callback', async (req, res) => {
-	// console.log(req);
 	const { code } = req.query;
 	const data = await spotifyApi.authorizationCodeGrant(code);
 	const { expires_in, access_token, refresh_token } = data.body;
-	// res.redirect(
-	// 	'http://localhost:3000/#' +
-	// 		querystring.stringify({
-	// 			access_token: access_token,
-	// 			refresh_token: refresh_token
-	// 		})
-	// );
-	spotifyApi.setAccessToken(access_token);
-	const me = await spotifyApi.getMe();
-	res.json(me);
-	// res.send(access_token);
-	// res.send(req);
+	console.log(expires_in);
+	res.header('access_token', access_token);
+	res.redirect(
+		'http://localhost:3000/#' +
+			querystring.stringify({
+				access_token: access_token
+				// refresh_token: refresh_token
+			})
+	);
 });
 
-// start up the server
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));

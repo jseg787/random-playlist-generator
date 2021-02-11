@@ -6,7 +6,7 @@ This app allows you to create and save randomly generated playlists. These playl
 
 ## Using the app locally
 
-# `.env`
+### `.env`
 Environmental variables assigned in `.env` file at root level of React app
 The client ID and Client Secret will have to be obtained throught the Spotify API
 ``` bash
@@ -16,5 +16,5 @@ CLIENT_SECRET="" # string
 REDIRECT_URI="http://localhost:8080/callback"
 PORT=8080 # int
 ```
-# Running the App
+### Running the App
 App requires two terminal sessions, one at root and the other at `/client`.

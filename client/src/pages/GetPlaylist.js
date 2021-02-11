@@ -4,6 +4,8 @@ import Song from '../components/Song';
 import Loading from '../components/Loading';
 import Search from '../components/Search';
 import Spotify from 'spotify-web-api-js';
+import { getMe, getGenres, getDateString } from '../SpotifyHelper';
+import SavePlaylist from '../SavePlaylist';
 
 const spotifyWebApi = new Spotify();
 
@@ -21,7 +23,7 @@ class GetPlaylist extends React.Component {
 
 	componentDidMount = async () => {
 		this.setState({ loading: true });
-		const genres = await this.getGenres();
+		const genres = await getGenres();
 		this.setDefaultTitle();
 		this.setState({
 			genres: genres,
@@ -29,18 +31,7 @@ class GetPlaylist extends React.Component {
 		});
 	};
 
-	getGenres = async () => {
-		const genreData = await spotifyWebApi.getAvailableGenreSeeds();
-		return genreData.genres;
-	};
-
-	getMe = async () => {
-		const me = await spotifyWebApi.getMe();
-		return me;
-	};
-
 	getASong = async () => {
-		console.log('getting a song');
 		let newSongData;
 		let foundTrack = false;
 		while (!foundTrack) {
@@ -110,13 +101,7 @@ class GetPlaylist extends React.Component {
 	};
 
 	setDefaultTitle = () => {
-		const date = new Date();
-		const day = date.getDay().toString();
-		const month = date.getMonth().toString();
-		const year = date.getFullYear().toString();
-		const hour = date.getHours().toString();
-		const minutes = date.getMinutes().toString();
-		const title = `${year}-${month}-${day} ${hour}:${minutes}`;
+		const title = getDateString;
 		this.setState({ playlistName: title });
 	};
 
@@ -135,7 +120,7 @@ class GetPlaylist extends React.Component {
 
 	savePlaylist = async () => {
 		this.setState({ saving: true });
-		const me = await this.getMe();
+		const me = await getMe();
 		const playlistSongs = this.state.songs.map((song) => song.uri);
 		const playlist = await spotifyWebApi.createPlaylist(me.id, {
 			name: this.state.playlistName
@@ -159,45 +144,41 @@ class GetPlaylist extends React.Component {
 	};
 
 	render() {
-		const songItems = this.state.songs.map((song) => (
+		const { loggedIn } = this.props;
+		const { songs, playingSong, loading, numberOfSongs, saving, saved, playlistName } = this.state;
+
+		const songItems = songs.map((song) => (
 			<Song
 				songItem={song}
-				playingSong={this.state.playingSong}
+				playingSong={playingSong}
 				setPlayingSong={this.setPlayingSong}
 				saveSong={this.saveSong}
 				key={song.name}
 			/>
 		));
-		if (!this.props.loggedIn) return <Redirect to="/login" />;
+		if (!loggedIn) return <Redirect to="/login" />;
 		else {
 			return (
 				<div className="playlist">
-					{this.state.loading ? (
+					{loading ? (
 						<Loading />
 					) : (
 						<div>
 							<Search
-								numberOfSongs={this.state.numberOfSongs}
+								numberOfSongs={numberOfSongs}
 								updateNumber={this.updateNumber}
 								incrementNumber={this.incrementNumber}
 								decrementNumber={this.decrementNumber}
 								getAPlaylist={this.getAPlaylist}
 							/>
-							{songItems[0] && (
-								<div className="d-flex justify-content-center my-3">
-									<input
-										className="playlist-title mx-3"
-										type="text"
-										placeholder="Name the playlist"
-										onChange={this.updateTitleField}
-									/>
-									<button className="btn btn-success" onClick={this.savePlaylist}>
-										Save Playlist
-									</button>
-									{this.state.saving && <Loading />}
-									{this.state.saved && <p className="text-success">Saved</p>}
-								</div>
-							)}
+							<SavePlaylist
+								songs={songs}
+								title={playlistName}
+								updateTitle={this.updateTitleField}
+								save={this.savePlaylist}
+								saving={saving}
+								saved={saved}
+							/>
 							{songItems}
 						</div>
 					)}

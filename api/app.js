@@ -44,7 +44,6 @@ app.get('/callback', async (req, res) => {
 	const { code } = req.query;
 	const data = await spotifyApi.authorizationCodeGrant(code);
 	const { expires_in, access_token, refresh_token } = data.body;
-	console.log(expires_in);
 	res.header('access_token', access_token);
 	res.redirect(
 		'http://localhost:3000/#' +

@@ -1,6 +1,8 @@
 import React from 'react';
 
-function Search({ numberOfSongs, updateNumber, incrementNumber, decrementNumber, getAPlaylist }) {
+function Search(props) {
+	const { numberOfSongs, updateNumber, incrementNumber, decrementNumber, getAPlaylist } = props;
+
 	return (
 		<div className="d-flex justify-content-center mb-3">
 			<input
@@ -20,7 +22,7 @@ function Search({ numberOfSongs, updateNumber, incrementNumber, decrementNumber,
 					-
 				</button>
 			</div>
-			<p className="text-light mr-3" style={{ fontSize: '1.5rem' }}>
+			<p className="text-light" style={{ fontSize: '1.5rem', margin: '.5rem 1rem' }}>
 				songs
 			</p>
 			<button className="btn btn-primary" onClick={getAPlaylist}>

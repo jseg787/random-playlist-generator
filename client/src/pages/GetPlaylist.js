@@ -101,7 +101,7 @@ class GetPlaylist extends React.Component {
 	};
 
 	setDefaultTitle = () => {
-		const title = getDateString;
+		const title = getDateString();
 		this.setState({ playlistName: title });
 	};
 

@@ -1,4 +1,6 @@
 import Spotify from 'spotify-web-api-js';
+import genres from './genres';
+
 const spotifyWebApi = new Spotify();
 
 export const setAccessToken = (access_token) => {

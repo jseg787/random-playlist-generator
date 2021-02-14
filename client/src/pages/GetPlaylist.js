@@ -6,6 +6,7 @@ import Search from '../components/Search';
 import Spotify from 'spotify-web-api-js';
 import { getMe, getGenres, getDateString } from '../SpotifyHelper';
 import SavePlaylist from '../SavePlaylist';
+import genres from '../genres';
 
 const spotifyWebApi = new Spotify();
 
@@ -16,30 +17,19 @@ class GetPlaylist extends React.Component {
 		loading: false,
 		saving: false,
 		saved: false,
-		genres: [],
 		songs: [],
 		playingSong: ''
-	};
-
-	componentDidMount = async () => {
-		this.setState({ loading: true });
-		const genres = await getGenres();
-		this.setDefaultTitle();
-		this.setState({
-			genres: genres,
-			loading: false
-		});
 	};
 
 	getASong = async () => {
 		let newSongData;
 		let foundTrack = false;
 		while (!foundTrack) {
-			const randomGenre = this.state.genres[Math.floor(Math.random() * this.state.genres.length)];
+			const randomGenre = genres[Math.floor(Math.random() * genres.length)];
 			try {
 				newSongData = await spotifyWebApi.searchTracks(`genre:${randomGenre}`, {
 					limit: 1,
-					offset: Math.floor(Math.random() * 100)
+					offset: Math.floor(Math.random() * 1000)
 				});
 			} catch (err) {
 				continue;

@@ -4,9 +4,8 @@ import Song from '../components/Song';
 import Loading from '../components/Loading';
 import Search from '../components/Search';
 import Spotify from 'spotify-web-api-js';
-import { getMe, getGenres, getDateString } from '../SpotifyHelper';
+import { getMe, getSong, getDateString } from '../SpotifyHelper';
 import SavePlaylist from '../SavePlaylist';
-import genres from '../genres';
 
 const spotifyWebApi = new Spotify();
 
@@ -21,49 +20,23 @@ class GetPlaylist extends React.Component {
 		playingSong: ''
 	};
 
-	getASong = async () => {
-		let newSongData;
-		let foundTrack = false;
-		while (!foundTrack) {
-			const randomGenre = genres[Math.floor(Math.random() * genres.length)];
-			try {
-				newSongData = await spotifyWebApi.searchTracks(`genre:${randomGenre}`, {
-					limit: 1,
-					offset: Math.floor(Math.random() * 1000)
-				});
-			} catch (err) {
-				continue;
-			}
-			if (newSongData.tracks.items[0]) {
-				foundTrack = true;
-			}
-		}
-		console.log(newSongData.tracks.items[0]);
-		this.setState((state) => {
-			const songs = [ ...state.songs, newSongData.tracks.items[0] ];
-			return {
-				songs
-			};
-		});
-	};
-
 	getAPlaylist = async () => {
 		this.setState({
 			loading: true,
 			saved: false
 		});
-		this.resetSongs();
 		this.setDefaultTitle();
+
+		const newSongs = [];
+
 		for (let i = 0; i < this.state.numberOfSongs; i++) {
-			await this.getASong();
+			const foundSong = await getSong();
+			newSongs.push(foundSong);
 		}
 		this.setState({
+			songs: newSongs,
 			loading: false
 		});
-	};
-
-	resetSongs = () => {
-		this.setState({ songs: [] });
 	};
 
 	updateNumber = (e) => {

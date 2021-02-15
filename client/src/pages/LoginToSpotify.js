@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import React, { Component } from 'react';
 
 class LoginToSpotify extends Component {

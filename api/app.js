@@ -36,17 +36,20 @@ function generateRandomString(length) {
 }
 
 app.get('/login', (req, res) => {
+	console.log('here');
 	const state = generateRandomString(16);
 	res.redirect(spotifyApi.createAuthorizeURL(scopes, state));
 });
 
 app.get('/callback', async (req, res) => {
+	const url = `${req.protocol}://${req.get('host').replace('8000', '3000')}/#`;
+	console.log(req.get('host'));
 	const { code } = req.query;
 	const data = await spotifyApi.authorizationCodeGrant(code);
 	const { expires_in, access_token, refresh_token } = data.body;
 	res.header('access_token', access_token);
 	res.redirect(
-		'http://localhost:3000/#' +
+		url +
 			querystring.stringify({
 				access_token: access_token
 				// refresh_token: refresh_token

@@ -1,0 +1,10 @@
+.Navbar {
+    background-color: #1d1d1d;
+    padding: .5rem;
+}
+
+.Navbar-logo {
+    width: 2rem;
+    margin-left: 1rem;
+    display: block;
+}

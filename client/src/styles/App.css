@@ -1,7 +1,6 @@
-:root,
+/* :root,
 body,
 * {
-  /* CSS variable */
   --bg-one: #fff;
   --bg-two: #282828;
   --bg-three: #333;
@@ -10,9 +9,9 @@ body,
   --acc-one: #333;
   --acc-two: #fff;
   --acc-three: #c00;
-  /*--acc-four: ;
+  --acc-four: ;
   --acc-five: ;
-  --acc-six: ;*/
+  --acc-six: ;
   --fffa: rgba(255, 255, 255, 0.1);
 }
 
@@ -28,20 +27,6 @@ body {
   font-size: 1.5rem;
   padding: 0;
 }
-
-.add-to-likes {
-  color: var(--acc-three);
-}
-
-.add-to-likes:hover {
-  color: var(--acc-three);
-}
-
-.add-to-likes:active {
-  color: var(--acc-three) !important; 
-}
-
-/* Input type = number */
 
 .player {
   position: relative;
@@ -95,4 +80,4 @@ input[type=number]::-webkit-inner-spin-button {
 
 .playlist-title:focus {
   outline: none;
-}
+} */

@@ -20,39 +20,6 @@ body {
   background-color: #333;
 }
 
-.song {
-  /* position: relative; */
-  /* width: 414px; */
-  padding: 0.675rem 0;
-  background-color: var(--bg-two);
-  /* border-top: 1px solid var(--acc-two); */
-  border-bottom: 1px solid var(--acc-one);
-}
-
-/* .artwork img {
-  margin: 0 0.675rem;
-  border-radius: 0.25rem;
-  float: left;
-} */
-
-.info {
-  /* padding: auto 0; */
-  text-align: left;
-  color: var(--txt-one);
-}
-
-.info div {
-  /* display: block; */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  /* max-width: 100%; */
-}
-
-.title {
-  font-weight: 800;
-}
-
 .buttons button {
   font-size: 1.5rem;
   padding: 0;

@@ -1,0 +1,26 @@
+.Song {
+    /* position: relative; */
+    /* width: 414px; */
+    padding: 0.675rem 0;
+    background-color: var(--bg-two);
+    /* border-top: 1px solid var(--acc-two); */
+    border-bottom: 1px solid var(--acc-one);
+}
+
+.Song-info {
+    /* padding: auto 0; */
+    text-align: left;
+    color: var(--txt-one);
+}
+
+.Song-info div {
+    /* display: block; */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* max-width: 100%; */
+}
+
+.Song-title {
+    font-weight: 800;
+}

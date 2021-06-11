@@ -1,0 +1,29 @@
+.Search {
+    display: flex;
+    justify-content: space-around;
+    background-color: red;
+}
+
+.Search-number {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    text-align: right;
+    width: 3.5rem;
+    /* margin: 0 .2rem; */
+}
+
+.Search-number--buttons {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.Search-number--buttons button {
+    border: none;
+    width: 40px;
+    font-weight: 900;
+    color: #fff;
+    background-color: rgba(0, 0, 0, .4);
+}

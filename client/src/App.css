@@ -63,15 +63,6 @@ body {
   max-width: 420px;
 }
 
-.number {
-  background-color: rgba(0, 0, 0, 0);
-  border: none;
-  color: #fff !important;
-  font-size: 2rem;
-  text-align: right;
-  width: 3.5rem;
-  margin: 0 .2rem;
-}
 
 input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;

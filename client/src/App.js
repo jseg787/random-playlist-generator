@@ -11,7 +11,7 @@ import LoginToSpotify from './pages/LoginToSpotify';
 import NavBar from './components/NavBar';
 import { getHashParams, setAccessToken } from './SpotifyHelper';
 
-import './App.css';
+import './styles/App.css';
 
 class App extends Component {
   constructor() {

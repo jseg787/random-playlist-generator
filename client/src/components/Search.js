@@ -12,6 +12,7 @@ function Search(props) {
 
   return (
     <div className="Search">
+      <p>Get</p>
       <input
         className="Search-number"
         type="number"
@@ -26,7 +27,7 @@ function Search(props) {
         <button onClick={decrementNumber}>-</button>
       </div>
       <p className="">songs</p>
-      <button className="" onClick={getAPlaylist}>
+      <button className="Search-button" onClick={getAPlaylist}>
         Get a playlist
       </button>
     </div>

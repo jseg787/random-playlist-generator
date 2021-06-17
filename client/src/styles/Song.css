@@ -1,19 +1,50 @@
 .Song {
-
+    width: 25rem;
+    background-color: #eee;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+    /* height: 500px; */
 }
 
-.Song-card {
-
+.Song--card {
+    display: flex;
+    justify-content: space-around;
 }
 
-.Song-image {
-
+.Song--image {
+    flex: 1;    
 }
 
-.Song-image image {
-
+.Song--info {
+    flex: 3;
 }
 
-.Song-info {
+.Song--buttons {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    font-size: 100rem;
+}
+
+.Song--buttons__save {
+    color: LightSalmon;
+    margin-bottom: .5rem;
+}
+
+.Song--buttons button {
+    flex: 1;
+    font-size: 1.5rem;
+    border: none;
+    background-color: #eff;
+    border-radius: 5px;
+}
+
+.Song--buttons button:hover {
+    background-color: #dee;
+    cursor: pointer;
+}
+
+.Song--image image {
 
 }

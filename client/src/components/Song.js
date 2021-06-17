@@ -7,24 +7,30 @@ function Song(props) {
   const src = `https://open.spotify.com/embed/track/${id}`;
   return (
     <div className="Song">
-      <div className="Song-card">
-        <div className="Song-image">
+      <div className="Song--card">
+        <div className="Song--image">
           <img src={album.images[2].url} alt={name} />
         </div>
-        <div className="Song-info">
+
+        <div className="Song--info">
           <div className="title">{name}</div>
           <div className="artist">{artists[0].name}</div>
           <div className="album">{album.name}</div>
         </div>
-        <div className="Song-buttons">
-          <button className="" onClick={() => saveSong(id)}>
+
+        <div className="Song--buttons">
+          <button className="Song--buttons__save" onClick={() => saveSong(id)}>
             &#x2665;
           </button>
-          <button className="" onClick={() => setPlayingSong(id)}>
+          <button
+            className="Song--buttons__play"
+            onClick={() => setPlayingSong(id)}
+          >
             &#9658;
           </button>
         </div>
       </div>
+
       {playingSong === id && (
         <div className="player">
           <iframe
